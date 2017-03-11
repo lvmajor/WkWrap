@@ -49,7 +49,7 @@ namespace WkWrap.Core
         /// <returns></returns>
         public byte[] ConvertToPdf(string html)
         {
-            return ConvertToPdf(html, Encoding.UTF8, new ConversionSettings());
+            return ConvertToPdf(html, Encoding.UTF8, ConversionSettings.Default());
         }
 
         /// <summary>
@@ -61,6 +61,9 @@ namespace WkWrap.Core
         /// <returns></returns>
         public byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings)
         {
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings));
+
             if (string.IsNullOrEmpty(html))
                 html = string.Empty;
             byte[] result;
@@ -84,6 +87,13 @@ namespace WkWrap.Core
             Stream outputStream,
             ConversionSettings settings)
         {
+            if (inputStream == null)
+                throw new ArgumentNullException(nameof(inputStream));
+            if (outputStream == null)
+                throw new ArgumentNullException(nameof(outputStream));
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings));
+
             ConvertToPdfInternal(inputStream, outputStream, settings.ToString().Trim(), settings.ExecutionTimeout);
         }
 
@@ -100,8 +110,13 @@ namespace WkWrap.Core
             string settings,
             TimeSpan? executionTimeout = null)
         {
-            var stringSettings = settings?.Trim() ?? string.Empty;
-            ConvertToPdfInternal(inputStream, outputStream, settings, executionTimeout);
+            if (inputStream == null)
+                throw new ArgumentNullException(nameof(inputStream));
+            if (outputStream == null)
+                throw new ArgumentNullException(nameof(outputStream));
+
+            var stringSetting = settings?.Trim() ?? string.Empty;
+            ConvertToPdfInternal(inputStream, outputStream, stringSetting, executionTimeout);
         }
 
         /// <summary>
