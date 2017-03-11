@@ -11,10 +11,15 @@
     <PackageTags>HTML, PDF, html, pdf, html to pdf, converter, html-to-pdf, HTML-to-PDF, wkhtmltopdf</PackageTags>
     <NeutralLanguage />
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
