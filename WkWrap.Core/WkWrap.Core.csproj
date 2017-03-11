@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <Authors>Roman Bukin</Authors>
+    <Company />
+    <Description>Wkhtmltopdf cross-platform C# wrapper for .NET Core.</Description>
+    <Copyright>© 2017, Roman Bukin.</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/NoMoreLoad/WkWrap/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/NoMoreLoad/WkWrap</PackageProjectUrl>
+    <PackageTags>HTML, PDF, html, pdf, html to pdf, converter, html-to-pdf, HTML-to-PDF, wkhtmltopdf</PackageTags>
+    <NeutralLanguage />
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
