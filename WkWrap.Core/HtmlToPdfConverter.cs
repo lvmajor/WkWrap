@@ -8,7 +8,7 @@ namespace WkWrap.Core
     /// <summary>
     /// Html to PDF converter (C# WkHtmlToPdf process wrapper).
     /// </summary>
-    public class HtmlToPdfConverter
+    public class HtmlToPdfConverter : IHtmlToPdfConverter
     {
         /// <summary>
         /// Constructs new instance of <see cref="HtmlToPdfConverter"/>.
