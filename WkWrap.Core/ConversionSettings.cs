@@ -10,21 +10,12 @@ namespace WkWrap.Core
     public class ConversionSettings
     {
         /// <summary>
-        /// Constructs new instance of <see cref="ConversionSettings"/>.
+        /// Returns new instance of <see cref="ConversionSettings"/> with default settings.
         /// </summary>
-        public ConversionSettings() : this(
-            PageSize.Default,
-            PageOrientation.Default,
-            PageMargins.Default(),
-            false,
-            false,
-            true,
-            true,
-            TimeSpan.FromMilliseconds(200),
-            true,
-            true,
-            null)
+        /// <returns></returns>
+        public static ConversionSettings Default()
         {
+            return new ConversionSettings();
         }
 
         /// <summary>
@@ -37,29 +28,30 @@ namespace WkWrap.Core
         /// <param name="lowQuality">Option to generate low quality PDF.</param>
         /// <param name="quiet">Option to suppress wkhtmltopdf debug/info log messages.</param>
         /// <param name="enableJavaScript">Option that allows web pages to run JavaScript.</param>
-        /// <param name="javaScriptDelay">Delay for JavaScript finish (will applies only if JavaScript enabled).</param>
+        /// <param name="javaScriptDelay">Delay for JavaScript finish (will applies only if value not null and JavaScript enabled).</param>
         /// <param name="enableExternalLinks">Option that allows make links to remote web pages.</param>
         /// <param name="enableImages">Option that allows to load or print images.</param>
         /// <param name="executionTimeout">Maximum execution time for PDF generation process.</param>
         public ConversionSettings(
-            PageSize pageSize,
-            PageOrientation orientation,
-            PageMargins margins,
-            bool grayscale,
-            bool lowQuality,
-            bool quiet,
-            bool enableJavaScript,
-            TimeSpan javaScriptDelay,
-            bool enableExternalLinks,
-            bool enableImages,
-            TimeSpan? executionTimeout)
+            PageSize pageSize = PageSize.Default,
+            PageOrientation orientation = PageOrientation.Default,
+            PageMargins margins = default(PageMargins),
+            bool grayscale = false,
+            bool lowQuality = false,
+            bool quiet = true,
+            bool enableJavaScript = true,
+            TimeSpan? javaScriptDelay = null,
+            bool enableExternalLinks = true,
+            bool enableImages = true,
+            TimeSpan? executionTimeout = null)
         {
             if (!Enum.IsDefined(typeof(PageSize), pageSize))
                 throw new ArgumentOutOfRangeException(nameof(pageSize));
             if (!Enum.IsDefined(typeof(PageOrientation), orientation))
                 throw new ArgumentOutOfRangeException(nameof(orientation));
-            if (javaScriptDelay.Ticks <= 0)
+            if (javaScriptDelay?.Ticks <= 0)
                 throw new ArgumentOutOfRangeException(nameof(javaScriptDelay));
+
             PageSize = pageSize;
             Orientation = orientation;
             Margins = margins;
@@ -112,7 +104,7 @@ namespace WkWrap.Core
         /// <summary>
         /// Returns delay for JavaScript finish (will applies only if JavaScript enabled).
         /// </summary>
-        private TimeSpan JavaScriptDelay { get; }
+        private TimeSpan? JavaScriptDelay { get; }
 
         /// <summary>
         /// Returns option that allows make links to remote web pages.
@@ -157,8 +149,13 @@ namespace WkWrap.Core
             if (EnableJavaScript)
             {
                 builder.Append(" --enable-javascript");
-                var jsDelayString = JavaScriptDelay.TotalMilliseconds.ToString("F0", CultureInfo.InvariantCulture);
-                builder.Append($" --javascript-delay {jsDelayString}");
+                if (JavaScriptDelay.HasValue)
+                {
+                    var jsDelayString = JavaScriptDelay.Value.TotalMilliseconds.ToString(
+                        "F0",
+                        CultureInfo.InvariantCulture);
+                    builder.Append($" --javascript-delay {jsDelayString}");
+                }
             }
             else
             {
