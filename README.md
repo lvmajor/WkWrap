@@ -1,7 +1,7 @@
 # WkWrap
 [wkhtmltopdf](http://wkhtmltopdf.org/) cross-platform C# wrapper for .NET Core.
 ## Overview
-This project is build against [.NET Standard 1.4](https://docs.microsoft.com/en-us/dotnet/articles/standard/library) using the [RTM tooling](https://www.microsoft.com/net/download/core) that ships with [Visual Studio 2017](https://www.visualstudio.com/downloads/). This is the only configuration I'm support on the issue tracker. WkWrap calls wkhtmltopdf in stream-based processing mode, so you don't need to provide any temp folders.
+This project is build over [.NET Standard 1.4](https://docs.microsoft.com/en-us/dotnet/articles/standard/library) using the [RTM tooling](https://www.microsoft.com/net/download/core) that ships with [Visual Studio 2017](https://www.visualstudio.com/downloads/). This is the only configuration I'm support on the issue tracker. WkWrap calls wkhtmltopdf in stream-based processing mode, so doesn't need to provide any temp folders.
 
 ## Getting started
 ### Installation
@@ -41,7 +41,7 @@ If you need to convert html in stream mode you can do it with specific stream-ba
 var resultStream = new MemoryStream();
 var wkhtmltopdf = new FileInfo(@"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe");
 var converter = new HtmlToPdfConverter(wkhtmltopdf);
-converter.ConvertToPdf(htmlMemorySream, resultStream, ConversionSettings.Default());
+converter.ConvertToPdf(htmlMemoryStream, resultStream, ConversionSettings.Default());
 ```
 ### Custom wkhtmltopdf options
 Instance of *ConversionSettings* just converts to wkhtmltopdf command line arguments with *.ToString()* method call. So if you want to specify custom wkhtmltopdf command line arguments you can do it too!
@@ -49,7 +49,7 @@ Instance of *ConversionSettings* just converts to wkhtmltopdf command line argum
 var resultStream = new MemoryStream();
 var wkhtmltopdf = new FileInfo(@"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe");
 var converter = new HtmlToPdfConverter(wkhtmltopdf);
-converter.ConvertToPdf(htmlMemorySream, resultStream, "-s A3 -L 0 -T 0 -B 0 -R 0 -g -q");
+converter.ConvertToPdf(htmlMemoryStream, resultStream, "-s A3 -L 0 -T 0 -B 0 -R 0 -g -q");
 ```
 Or you can call wkhtmltopdf with default options using
 ```csharp
@@ -57,5 +57,5 @@ var resultStream = new MemoryStream();
 var wkhtmltopdf = new FileInfo(@"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe");
 var converter = new HtmlToPdfConverter(wkhtmltopdf);
 string settings = null;
-converter.ConvertToPdf(htmlMemorySream, resultStream, settings);
+converter.ConvertToPdf(htmlMemoryStream, resultStream, settings);
 ```
