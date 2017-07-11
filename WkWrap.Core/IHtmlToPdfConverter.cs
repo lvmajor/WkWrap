@@ -31,8 +31,9 @@ namespace WkWrap.Core
         /// <param name="html">HTML content.</param>
         /// <param name="htmlEncoding">HTML content encoding.</param>
         /// <param name="settings">Conversion settings.</param>
+        /// <param name="additonalSettings">Additional settings to append to the conversion settings.</param>
         /// <returns></returns>
-        byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings);
+        byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings, string additionalSettings);
 
         /// <summary>
         /// Generate PDF into specified output <see cref="Stream" />.
@@ -40,7 +41,8 @@ namespace WkWrap.Core
         /// <param name="inputStream">HTML content input stream.</param>
         /// <param name="outputStream">PDF file output stream.</param>
         /// <param name="settings">Conversion settings.</param>
-        void ConvertToPdf(Stream inputStream, Stream outputStream, ConversionSettings settings);
+        /// <param name="additonalSettings">Additional settings to append to the conversion settings.</param>
+        void ConvertToPdf(Stream inputStream, Stream outputStream, ConversionSettings settings, string additionalSettings);
 
         /// <summary>
         /// Generate PDF into specified output <see cref="Stream" />.
