@@ -58,8 +58,9 @@ namespace WkWrap.Core
         /// <param name="html">HTML content.</param>
         /// <param name="htmlEncoding">HTML content encoding.</param>
         /// <param name="settings">Conversion settings.</param>
+        /// <param name="additonalSettings">Additional settings to append to the conversion settings.</param>
         /// <returns></returns>
-        public byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings)
+        public byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings, string additionalSettings = string.Empty)
         {
             if (settings == null)
                 throw new ArgumentNullException(nameof(settings));
@@ -70,7 +71,7 @@ namespace WkWrap.Core
             using (var inputStream = new MemoryStream(htmlEncoding.GetBytes(html)))
             using (var outputStream = new MemoryStream())
             {
-                ConvertToPdf(inputStream, outputStream, settings);
+                ConvertToPdf(inputStream, outputStream, settings, additionalSettings);
                 result = outputStream.ToArray();
             }
             return result;
@@ -82,10 +83,12 @@ namespace WkWrap.Core
         /// <param name="inputStream">HTML content input stream.</param>
         /// <param name="outputStream">PDF file output stream.</param>
         /// <param name="settings">Conversion settings.</param>
+        /// <param name="additonalSettings">Additional settings to append to the conversion settings.</param>
         public void ConvertToPdf(
             Stream inputStream,
             Stream outputStream,
-            ConversionSettings settings)
+            ConversionSettings settings,
+            string additionalSettings = string.Empty)
         {
             if (inputStream == null)
                 throw new ArgumentNullException(nameof(inputStream));
@@ -93,8 +96,9 @@ namespace WkWrap.Core
                 throw new ArgumentNullException(nameof(outputStream));
             if (settings == null)
                 throw new ArgumentNullException(nameof(settings));
-
-            ConvertToPdfInternal(inputStream, outputStream, settings.ToString().Trim(), settings.ExecutionTimeout);
+                
+            var combinedSettings = $"{settings.ToString().Trim()} {additionalSettings}".Trim();
+            ConvertToPdfInternal(inputStream, combinedSettings, finalSettings, settings.ExecutionTimeout);
         }
 
         /// <summary>
