@@ -60,7 +60,7 @@ namespace WkWrap.Core
         /// <param name="settings">Conversion settings.</param>
         /// <param name="additonalSettings">Additional settings to append to the conversion settings.</param>
         /// <returns></returns>
-        public byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings, string additionalSettings = string.Empty)
+        public byte[] ConvertToPdf(string html, Encoding htmlEncoding, ConversionSettings settings, string additionalSettings = "")
         {
             if (settings == null)
                 throw new ArgumentNullException(nameof(settings));
@@ -88,7 +88,7 @@ namespace WkWrap.Core
             Stream inputStream,
             Stream outputStream,
             ConversionSettings settings,
-            string additionalSettings = string.Empty)
+            string additionalSettings = "")
         {
             if (inputStream == null)
                 throw new ArgumentNullException(nameof(inputStream));
@@ -98,7 +98,7 @@ namespace WkWrap.Core
                 throw new ArgumentNullException(nameof(settings));
                 
             var combinedSettings = $"{settings.ToString().Trim()} {additionalSettings}".Trim();
-            ConvertToPdfInternal(inputStream, combinedSettings, finalSettings, settings.ExecutionTimeout);
+            ConvertToPdfInternal(inputStream, outputStream, combinedSettings, settings.ExecutionTimeout);
         }
 
         /// <summary>
